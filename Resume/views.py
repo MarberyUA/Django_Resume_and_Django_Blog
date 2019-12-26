@@ -40,8 +40,14 @@ class EmailSettingsUpdate(LoginRequiredMixin, UpdateView):
 
 def projects_list(request):
     projects = Post.objects.all()
-    email = Email.objects.get(slug='email')
-    github = GitHubProfile.objects.get(slug='github')
+    try:
+        email = Email.objects.get(slug='email')
+        github = GitHubProfile.objects.get(slug='github')
+    except:
+        email = Email.objects.create(slug='email', email='rlevadniy@ukr.net',
+                                     email_password='******', email_host='smtp.ukr.net',
+                                     email_port='465')
+        github = GitHubProfile.objects.create(slug='github', link='https://github.com/MarberyUA?tab=repositories')
     return render(request, 'resume/index.html', context={'posts': projects, 'github': github, 'email': email})
 
 
