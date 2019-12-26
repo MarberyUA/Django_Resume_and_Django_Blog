@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+    <div class="project-creat-tile">
+        <h1>Create a post with your project:</h1>
+    </div>
+{% endblock %}
+{% block slide %}
+{% endblock %}
+{% block content %}
+    <form action="{% url 'project_create_url' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create">
+            <div class="title">
+             <h4>Title:</h4>
+                {{ form.title }}
+            </div>
+            <div class="slug">
+                <h4>Identifier of your project:</h4>
+                {{ form.slug }}
+            </div>
+            <div class="photo">
+                <h4>Choose photo of project:</h4>
+               {{ form.project_image }}
+            </div>
+            <div class="technologists-list">
+                <h4>Select technology for your project:</h4>
+                <ul>
+                    <li>{{ form.technologists }}</li>
+                </ul>
+            </div>
+            <div class="description">
+                <h4>Enter a description:</h4>
+                {{ form.description }}
+            </div>
+
+        </div>
+        <div class="submit" style="padding-bottom: 10px">
+            <button type="submit" name="Button">Create</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

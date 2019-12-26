@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block slider %}
+    {% block content %}
+        {% load static %}
+        {% for post in posts %}
+                <div class="post-wrap" id="post-wrap">
+                    <div class="title_and_image">
+                     <div class="pinning_field">
+                        {% if post.pin %}
+                            <h4 {% if not request.user.is_staff %} style="padding-right: 20px;" {% endif %}>
+                                {% if request.user.is_staff %}
+                                    <a href="{{ post.get_update_url }}">
+                                        {{ post.title }}
+                                    </a>
+                                {% else %}
+                                    {{ post.title }}
+                                {% endif %}
+                            </h4>
+                            {% if request.user.is_staff %}
+                                <form action="{{ post.pin_post_url }}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="pin">
+                                        <img src="{% static 'pictures/unpin.png' %}">
+                                    </button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <h4 {% if not request.user.is_staff %} style="padding-right: 20px;" {% endif %}>
+                                {% if request.user.is_staff %}
+                                    <a href="{{ post.get_update_url }}">
+                                        {{ post.title }}
+                                    </a>
+                                {% else %}
+                                    {{ post.title }}
+                                {% endif %}
+                            </h4>
+                            {% if request.user.is_staff %}
+                                <form action="{{ post.pin_post_url }}" method="post">
+                                    {% csrf_token %}
+                                    <button class="unpin" type="submit">
+                                        <img src="{% static 'pictures/pin.png' %}">
+                                    </button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                     </div>
+                        <div class="project-image">
+                            {% if post.project_image %}
+                                <a href="{{ post.get_absolute_url }}">
+                                    <img src="{{ post.project_image.url }}">
+                                </a>
+                            {% else %}
+                                <div class="cl">
+                                    {% if request.user.is_staff %}
+                                        <a href="{{ post.get_image_url }}">Add image</a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <a href="{{ post.get_absolute_url }}">{{ post.reduction_description }}</a>
+                    <div class="program-language">
+                        <span>Programm language:</span>
+                        {{ post.programme_language }}
+                    </div>
+                    {% block technologists %}
+                        <div class="">
+                            <span>Technologists:</span>
+                            {% if request.user.is_staff %}
+                                <a href="{{ post.get_technology_url }}">Add technology</a>
+                            {% endif %}
+                        </div>
+                        <div class="technology_image">
+                            {% if post.technologists %}
+                                {% for object in post.technologists.all %}
+                                <div class="technologists-image">
+                                    <div class="technology-image1">
+                                        <img src="{{ object.image.url }}">
+{#                                        <a href="{{ post.get_technology_url }}">Add more technology</a>#}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endblock %}
+                    <a href="https://github.com/{{ post.link }}">Github repository</a>
+                    <div class="footer">
+                        <p>Was created at: {{ post.update_time }}</p>
+                    </div>
+                </div>
+        {% endfor %}
+    {% endblock %}
+{% endblock %}

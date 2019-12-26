@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <title>
+        {% block title %}
+            Blog Engine
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <div class="blog-background-image">
+        <img src="{% static 'pictures/blog-background-image.jpg' %}">
+    </div>
+    {% block nav %}
+        <nav class="blog-navigation">
+            <div class="blog-navigation-link">
+                <div class="first-part">
+                    <div class="">
+                        <a class="" href="{% url 'about_me_url' %}">Resume</a>
+                    </div>
+                    <div class="">
+                        <a href="{% url 'sign_up_url' %}">Sign up</a>
+                    </div>
+                    <div class="">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}">
+                                Log out
+                            </a>
+                            {% else %}
+                                <a href="{% url 'login' %}">
+                                Log in
+                            </a>
+                            {% endif %}
+                    </div>
+
+                    <div class="">
+                        <a class="" href="{% url 'tag_list_url' %}">Tags</a>
+                    </div>
+                </div>
+                <div class="resume-link" >
+                    <img src="{% static 'pictures/resume_logo.jpg' %}">
+                </div>
+                <div class="second-part">
+
+                    <div class="">
+                        <form action="{% url 'posts_list_url' %}">
+                            <input type="search" placeholder="Search" aria-label="Search" name="search">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+          </div>
+        </nav>
+    {% endblock %}
+    <div class="Post">
+        <div class="">
+            {% block content %}
+                Something here
+            {% endblock %}
+            {% if is_paginated %}
+                <nav class='nav-pagination'>
+                    <ul class="pagination">
+                        <li class="page-item {% if not prev_url %}disabled{% endif %}">
+                            <button><a class="page-link" href="{{ prev_url }}" tabindex="-1">Previous</a></button>
+                        </li>
+                        {% for n in page_object.paginator.page_range %}
+                            {% if page_object.number == n %}
+                                <li class="page-item active">
+                                   <button><a class="page-link" href="?page={{ n }}">{{ n }}</a></button>
+                                </li>
+                            {% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
+                                <li class="page-item">
+                                   <button><a class="page-link" href="?page={{ n }}">{{ n }}</a></button>
+                                </li>
+                            {% endif %}
+
+                        {% endfor %}
+                        <li class="page-item {% if not next_url %}disabled{% endif %}">
+                            <button><a class="page-link" href="{{ next_url }}">Next page</a></button>
+                        </li>
+                  </ul>
+                </nav>
+            {% endif %}
+            </div>
+        </div>
+
+    {% if request.user.is_staff and request.user.is_authenticated %}
+        <div class="admin-panel " style="margin-top: 10px; margin-left: 20px">
+            <a href="/admin" class="">Admin</a>
+            {% block admin_panel %}
+            {% endblock %}
+        </div>
+    {% endif %}
+    <script rel="{% static 'js/buttons.js' %}"></script>
+    <script rel="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>

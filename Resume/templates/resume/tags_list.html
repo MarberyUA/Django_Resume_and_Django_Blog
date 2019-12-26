@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <h2>Tags:</h2>
+{% endblock %}
+
+{% block content %}
+    {% for tag in tags %}
+        <span>{{ tag.slug }}</span>
+        {% if tag.image %}
+        {% else %}
+            <div class="">
+                <img src="{{ tag.image.url }}">
+            </div>
+        {% endif %}
+        <a href="{{ tag.get_absolute_url }}">Read</a>
+    {% endfor %}
+
+{% endblock %}
+
+'tag.image.save = File('django.png', open(r'D:\django.png', 'rb'))'

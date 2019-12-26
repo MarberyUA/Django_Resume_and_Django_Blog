@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block slide %}
+{% endblock %}
+{% block title %}
+{% endblock %}
+{% block content %}
+    <form action="{{  post.get_update_url }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="">
+            {{ form.as_p }}
+        </div>
+        <div class="submit" style="padding-bottom: 10px">
+            <button type="submit" name="Button">Edit</button>
+        </div>
+    </form>
+{% endblock %}
+{% block load-projects %}
+{% endblock %}
+{% block footer %}
+{% endblock %}

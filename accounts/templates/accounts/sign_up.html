@@ -1,0 +1,15 @@
+{% extends 'base_blog_template.html' %}
+{% block nav %}
+{% endblock %}
+{% block title %}
+    <h2>Sign up</h2>
+{% endblock %}
+{% block login %}
+{% endblock %}
+{% block content %}
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign up</button>
+    </form>
+{% endblock %}

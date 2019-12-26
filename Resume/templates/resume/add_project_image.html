@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    {% block add_image %}
+        <form action="{{  post.get_image.url }}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <p></p>
+            <button type="submit">Load</button>
+        </form>
+    {% endblock %}
+</body>
+</html>

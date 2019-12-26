@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% if pinned_post.pin %}
+            <h1>Pinned</h1>
+        {% else %}
+            <h1>Unpinned</h1>
+        {% endif %}
+    </title>
+</head>
+<body>
+    {% if pinned_post.pin %}
+        <h1>Post pinned successful</h1>
+    {% else %}
+        <h1>Post unpinned</h1>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'slick-1.8.1/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Resume</title>
+</head>
+<body >
+    <div class="all">
+        <div class="start">
+        {% block slide %}
+            <div class="demo-slide open_menu" id="demo-slidebottom">
+                <div class="inner" id="inner">
+                    {% if request.user.is_staff %}
+                    <a href="{{ email.get_email_update_ulr }}">
+                        <div class="settings">
+                            <div class="image-settings" style="background-image: url({% static 'pictures/Path.png' %});" id="image-settings">
+                                <div class="ig1" id="ig1">
+                                    <img src="{% static 'pictures/blockicon.png' %}" id="so-image">
+                                </div>
+                            </div>
+                            <p id="p-setting">SETTINGS</p>
+                        </div>
+                    </a>
+                    <a href="{{ github.get_github_update_url }}" class="github-links">
+                        <div class="settings-1">
+                            <div class="image-settings-1" style="background-image: url({% static 'pictures/Path.png' %});" id="image-settings-1">
+                                <div class="ig2" id="ig2">
+                                    <img src="{% static 'pictures/github.png' %}" id="so-image-1">
+                                </div>
+                            </div>
+                            <p id="p-setting1">SETTINGS</p>
+                        </div>
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'posts_list_url' %}" class="blog-link">
+                        <div class="settings-2">
+                            <div class="image-settings-2" style="background-image: url({% static 'pictures/Path.png' %});" id="image-settings-2">
+                                <div class="ig3" id="ig3">
+                                    <img src="{% static 'pictures/bloh.png' %}" id="so-image-2">
+                                </div>
+                            </div>
+                            <p id="p-setting2">MY BLOG</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="slide-button">
+                    <input id="button_image" type="image" src="{% static 'pictures/menu.jpg' %}" width="50px" height="50px">
+                </div>
+            </div>
+        {% endblock %}
+        {% block title %}
+            <div class="logo">
+                <div class="contacts">
+                    <div class="all_from_contacts">
+                                <h4>Rostislav Levadnyi</h4>
+                                <span>Junior Python web developer</span>
+                                <p>email: rlevadniy@ukr.net</p>
+                                <p>phone: +380997118438</p>
+                    </div>
+                </div>
+                <div class="photo">
+                    <img src="" alt="Nothing here">
+                </div>
+            </div>
+            </div>
+        <div class="about-me">
+            <div class="english">
+                <h4>LANGUAGES:</h4>
+                <p>English - intermediate</p>
+                <p>Russian - Native</p>
+                <p>Ukrainian - Native</p>
+            </div>
+            <div class=""></div>
+            <div class="about">
+                <h4>ABOUT ME:</h4>
+                <p id="info">Hello! I am Rostislav Levadnyi. Junior Python Web Developer with not commercial
+                    lever experience but with strong desire to get more experience.
+                <p>I have experience with GIT, MySQL, HTML, CSS, JQuery, Python, Django, OOP. Also, i have worked with such modules:
+                Requests, BeautifulSoup4</p>
+                </p>
+                <p>I have been learning Python 7 months .</p>
+            </div>
+        </div>
+    {% endblock %}
+    <div class="education">
+        <div class="about_school">
+
+        </div>
+        <div class="about_degree">
+            <div class="university">
+
+            </div>
+            <div class="self_learning">
+
+            </div>
+        </div>
+    </div>
+    <div class="skills">
+    </div>
+        <div class="slider" id="slider">
+            {% block content %}
+                Content:
+                {% block technologists %}
+                    Technologists:
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% block load-projects %}
+    {% if request.user.is_staff %}
+        <div class="load-project">
+                <ul id="list" class="buttons">
+                    <li class="see-options">
+                        <button>See the options</button>
+                        <ul class="no-display">
+                            <li class="button-load">
+                                <form method="post" action="{% url 'load_projects_url' %}" id="form">
+                                    {% csrf_token %}
+                                    <button type="submit">Load all your github projects</button>
+                                </form>
+                            </li>
+                            <li class="create-p">
+                                <form>
+                                    <a href="project/create"><input value="Add project manually" type="button"></a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+        </div>
+    {% else %}
+        <div style="width: 100%; margin-bottom: 20px"></div>
+    {% endif %}
+    {% endblock %}
+    {% block footer %}
+        <div class="contact_me">
+            <h4>Contact me:</h4>
+            <form method="post" action="{% url 'contact_me_url' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="inpp">
+                    <span>Your subject:</span>
+                    <input type="{{ forms.subject }}" name="subject">
+                </div>
+                <div class="inpp">
+                    <span>Your message:</span>
+                    <input type="{{ forms.message }}" name="message">
+                </div>
+                {% if user.is_authenticated %}
+                    <button type="submit">Send</button>
+                {% else %}
+                    <button type="submit" disabled>Send</button>
+                {% endif %}
+            </form>
+        </div>
+        <div class="under">
+            <p>The project created by Rostislav Levadnyi</p>
+        </div>
+    {% endblock %}
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous">
+    </script>
+    <script src="{% static 'slick-1.8.1/slick/slick.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/buttons.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

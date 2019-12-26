@@ -1,0 +1,9 @@
+{% extends 'resume/add_project_image.html' %}
+{% block add_image %}
+    <form method="post" action="{{ post.get_technology_url }}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.slug }}
+        {{ form.image }}
+        <button type="submit">Add</button>
+    </form>
+{% endblock %}

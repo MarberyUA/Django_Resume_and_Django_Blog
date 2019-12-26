@@ -1,0 +1,32 @@
+<div class="card text-center">
+        <div class="card-body">
+            <h4 class="card-header">{{ post.title }}</h4>
+            <p class="card-text">{{ post.body|truncatewords:15 }}</p>
+            <a href="{{ post.get_absolute_url }}" class="btn btn-light">Read</a>
+        </div>
+        <div class="card-header">
+            {{ post.date_pub }}
+        </div>
+        <div class="card-footer">
+            Tags:
+            {% for tag in post.tags.all %}
+                <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
+            {% endfor %}
+            {% if request.user.is_authenticated %}
+                <form method="post" id="form-like" action="{{ post.get_likes_url }}">
+                {% csrf_token %}
+                    <div class="likes">
+                        <span>Likes: {{ post.likes.all|length }}</span>
+                        {% if post.likes.all|length == 0 %}
+                            <button type="submit">Like</button>
+                        {% else %}
+                            {% load extra_filters %}
+                            <button type="submit" class="like-button">{{ post.slug|check:request.user.username }}</button>
+                        {% endif %}
+                    </div>
+                </form>
+            {% else %}
+                <span class="likes-counter">Likes: {{ post.likes.all|length }}</span>
+            {% endif %}
+        </div>
+</div>

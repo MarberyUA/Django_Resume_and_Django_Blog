@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="{% url 'tag_create_url' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <div class="submit">
+            <button type="submit" name="Button">Create</button>
+        </div>
+    </form>
+{% endblock %}

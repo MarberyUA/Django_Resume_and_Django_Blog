@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Some title</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <div class="post-detail">
+        <div class="title">
+            <h2>{{ post.title }}</h2>
+        </div>
+        <div class="">
+            {% if post.project_image %}
+                <div class="project-image">
+                    <img src="{{ post.project_image.url }}">
+                </div>
+            {% else %}
+                <div class="not-uploaded-image">
+                    <h3>Image was not uploaded</h3>
+                </div>
+            {% endif %}
+            <div class="">
+                {{ post.description }}
+                {% for object in post.technologists.all %}
+                    {% if object.image %}
+                        <div class="technologists">
+                            <img src="{{ object.image.url }}">
+                        </div>
+                    {% else %}
+                        <p>Technologists were not pointed</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="post-detail-github-link">
+                <span>{{ post.programme_language }}</span>
+                <a href="https://github.com/{{ post.link }}">Github</a>
+                <span>{{ post.update_time }}</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

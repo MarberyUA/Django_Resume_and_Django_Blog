@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+    <h1>Delete a tag from your projects</h1>
+{% endblock %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <span>Are you sure, you wanna delete this tag?{{ imagetag.slug }}</span>
+        <div class="submit" style="padding-bottom: 10px">
+            <button type="submit" name="Button">Delete</button>
+        </div>
+    </form>
+{% endblock %}
