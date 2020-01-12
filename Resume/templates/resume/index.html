@@ -9,7 +9,7 @@
                         {% if post.pin %}
                             <h4 {% if not request.user.is_staff %} style="padding-right: 20px;" {% endif %}>
                                 {% if request.user.is_staff %}
-                                    <a href="{{ post.get_update_url }}">
+                                    <a href="{% url 'project_edit_url' post.id %}">
                                         {{ post.title }}
                                     </a>
                                 {% else %}
@@ -27,7 +27,7 @@
                         {% else %}
                             <h4 {% if not request.user.is_staff %} style="padding-right: 20px;" {% endif %}>
                                 {% if request.user.is_staff %}
-                                    <a href="{{ post.get_update_url }}">
+                                    <a href="{% url 'project_edit_url' post.id %}">
                                         {{ post.title }}
                                     </a>
                                 {% else %}
@@ -35,7 +35,7 @@
                                 {% endif %}
                             </h4>
                             {% if request.user.is_staff %}
-                                <form action="{{ post.pin_post_url }}" method="post">
+                                <form action="{% url 'pin_post_url' post.id %}" method="post">
                                     {% csrf_token %}
                                     <button class="unpin" type="submit">
                                         <img src="{% static 'pictures/pin.png' %}">
@@ -46,20 +46,20 @@
                      </div>
                         <div class="project-image">
                             {% if post.project_image %}
-                                <a href="{{ post.get_absolute_url }}">
+                                <a href="{% url 'project_delete_url' post.id %}">
                                     <img src="{{ post.project_image.url }}">
                                 </a>
                             {% else %}
                                 <div class="cl">
                                     {% if request.user.is_staff %}
-                                        <a href="{{ post.get_image_url }}">Add image</a>
+                                        <a href="{% url 'add_project_image_url' post.id %}">Add image</a>
                                     {% endif %}
                                 </div>
                             {% endif %}
                         </div>
                     </div>
 
-                    <a href="{{ post.get_absolute_url }}">{{ post.reduction_description }}</a>
+                    <a href="{% url 'project_detail_url' post.id %}">{{ post.reduction_description }}</a>
                     <div class="program-language">
                         <span>Programm language:</span>
                         {{ post.programme_language }}
@@ -68,7 +68,7 @@
                         <div class="">
                             <span>Technologists:</span>
                             {% if request.user.is_staff %}
-                                <a href="{{ post.get_technology_url }}">Add technology</a>
+                                <a href="{% url 'add_technology_url' post.id %}">Add technology</a>
                             {% endif %}
                         </div>
                         <div class="technology_image">

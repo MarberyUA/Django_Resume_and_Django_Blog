@@ -13,7 +13,7 @@
                 <img src="{{ tag.image.url }}">
             </div>
         {% endif %}
-        <a href="{{ tag.get_absolute_url }}">Read</a>
+        <a href="{% url 'tag_detail_url' tag.id %}">Read</a>
     {% endfor %}
 
 {% endblock %}

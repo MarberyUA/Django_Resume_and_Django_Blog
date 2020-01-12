@@ -1,6 +1,6 @@
 {% extends 'resume/add_project_image.html' %}
 {% block add_image %}
-    <form method="post" action="{{ post.get_technology_url }}" enctype="multipart/form-data">
+    <form method="post" action="{% url 'add_technology_url' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.slug }}
         {{ form.image }}

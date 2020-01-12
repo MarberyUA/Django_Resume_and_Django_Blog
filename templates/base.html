@@ -3,8 +3,8 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'slick-1.8.1/slick/slick.css' %}">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'slick-1.8.1/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <title>Resume</title>
 </head>
 <body >
@@ -13,28 +13,6 @@
         {% block slide %}
             <div class="demo-slide open_menu" id="demo-slidebottom">
                 <div class="inner" id="inner">
-                    {% if request.user.is_staff %}
-                    <a href="{{ email.get_email_update_ulr }}">
-                        <div class="settings">
-                            <div class="image-settings" style="background-image: url({% static 'pictures/Path.png' %});" id="image-settings">
-                                <div class="ig1" id="ig1">
-                                    <img src="{% static 'pictures/blockicon.png' %}" id="so-image">
-                                </div>
-                            </div>
-                            <p id="p-setting">SETTINGS</p>
-                        </div>
-                    </a>
-                    <a href="{{ github.get_github_update_url }}" class="github-links">
-                        <div class="settings-1">
-                            <div class="image-settings-1" style="background-image: url({% static 'pictures/Path.png' %});" id="image-settings-1">
-                                <div class="ig2" id="ig2">
-                                    <img src="{% static 'pictures/github.png' %}" id="so-image-1">
-                                </div>
-                            </div>
-                            <p id="p-setting1">SETTINGS</p>
-                        </div>
-                    </a>
-                    {% endif %}
                     <a href="{% url 'posts_list_url' %}" class="blog-link">
                         <div class="settings-2">
                             <div class="image-settings-2" style="background-image: url({% static 'pictures/Path.png' %});" id="image-settings-2">
@@ -82,6 +60,9 @@
                 Requests, BeautifulSoup4</p>
                 </p>
                 <p>I have been learning Python 7 months .</p>
+                <h4>EDUCATION:</h4>
+                <p>I am study on computer engineer in Poltava National Technical University Yuri Kondratyuk</p>
+                <p>I am on the third course of education and i finally got a nessasery skils to get a job!</p>
             </div>
         </div>
     {% endblock %}
@@ -137,20 +118,20 @@
     {% block footer %}
         <div class="contact_me">
             <h4>Contact me:</h4>
-            <form method="post" action="{% url 'contact_me_url' %}" enctype="multipart/form-data">
+            <form method="post" action="{% url 'about_me_url' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="inpp">
                     <span>Your subject:</span>
-                    <input type="{{ forms.subject }}" name="subject">
+                    {{ form.subject }}
                 </div>
                 <div class="inpp">
                     <span>Your message:</span>
-                    <input type="{{ forms.message }}" name="message">
+                    {{ form.message }}
                 </div>
                 {% if user.is_authenticated %}
                     <button type="submit">Send</button>
                 {% else %}
-                    <button type="submit" disabled>Send</button>
+                    <button type="submit" disabled>You must log in to send a message</button>
                 {% endif %}
             </form>
         </div>

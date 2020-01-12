@@ -1,15 +1,12 @@
 from django import template
-from blog.models import Post
+from blog.models import LikeAction
 
 register = template.Library()
 
 @register.filter()
-def check(slug, name):
-    post = Post.objects.get(slug=slug)
+def is_user_liked(post_id, user_id):
     try:
-        post.likes.get(user_name=name)
-        var = 'Unlike'
+        is_liked = LikeAction.objects.get(post_id=post_id, user_id=user_id)
+        return True
     except:
-        var = 'Like'
-
-    return var
+        return False

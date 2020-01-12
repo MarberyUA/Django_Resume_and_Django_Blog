@@ -212,6 +212,10 @@ body {
 
 }
 
+.inpp label {
+    display: none;
+}
+
 .inpp span {
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
