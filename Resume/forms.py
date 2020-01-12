@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Post, ImageTag, GitHubProfile, Email
+from .models import Post, ImageTag
 from django.forms import TextInput, EmailField
 from django.core.exceptions import ValidationError
 
@@ -8,20 +8,12 @@ from django.core.exceptions import ValidationError
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'slug', 'project_image', 'technologists', 'description']
-
-    def clean_slug(self):
-        new_slug = self.cleaned_data['slug'].lower()
-
-        if new_slug == 'create':
-            raise ValidationError('Slug must be unique. We have "{}" slug already'.format(new_slug))
-
-        return new_slug
+        fields = ['title', 'project_image', 'technologists', 'description']
 
 
 class ContactForm(forms.Form):
-    subject = TextInput()
-    message = TextInput()
+    subject = forms.CharField(widget=forms.TextInput, max_length=100)
+    message = forms.CharField(widget=forms.TextInput, max_length=300)
 
 
 class AddImageForm(forms.ModelForm):
@@ -33,31 +25,10 @@ class AddImageForm(forms.ModelForm):
 class AddTechnologyForm(forms.ModelForm):
     class Meta:
         model = ImageTag
-        fields = ['slug', 'image']
+        fields = ['image']
 
 
 class ImageTagForm(ModelForm):
     class Meta:
         model = ImageTag
-        fields = ['slug', 'image']
-
-    def clean_slug(self):
-
-        new_slug = self.cleaned_data['slug'].lower()
-
-        if new_slug == 'create':
-            raise ValidationError('Slug must be unique. We have "{}" slug already'.format(new_slug))
-
-        return new_slug
-
-
-class GitHubUpdateForm(ModelForm):
-    class Meta:
-        model = GitHubProfile
-        fields = ['link']
-
-
-class EmailUpdateForm(ModelForm):
-    class Meta:
-        model = Email
-        fields = ['email', 'email_password', 'email_host', 'email_port', 'email_ssl', 'email_tls']
+        fields = ['image']

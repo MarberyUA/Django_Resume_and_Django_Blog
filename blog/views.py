@@ -41,34 +41,27 @@ def posts_list(request):
         'page_object': page,
         'is_paginated': is_paginated,
         'next_url': next_url,
-        'prev_url': previous_url
+        'prev_url': previous_url,
     }
 
     return render(request, 'blog/index.html', context=context)
 
 
 class PressLike(View):
-    def post(self, request, slug):
-        post = Post.objects.get(slug=slug)
-        name = request.user.username
-        test_action = LikeAction(user_name=name)
 
-        for object in post.likes.all():
-            if test_action.user_name == object.user_name:
-                object.delete()
-                object.save()
-                test_action = 'tested'
-        if test_action != 'tested':
-            action = LikeAction(user_name=name, press_like=True)
-            action.save()
-            post.likes.add(action)
-            post.save()
-            return redirect('posts_list_url')
-        else:
-            render(request, 'blog/includes/post_card_template.html')
+    def post(self, request, id):
+        post = Post.objects.get(id=id)
+        user = request.user
+        test_action = LikeAction(user=user, post=post)
+
+        try:
+            action = LikeAction.objects.get(user=user.id, post=post.id)
+            action.delete()
+
+        except:
+            action = LikeAction.objects.create(user=user, post=post, press_like=True)
+
         return redirect('posts_list_url')
-
-
 
 
 def tag_list(request):

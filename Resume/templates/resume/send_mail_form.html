@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block footer %}
+    <div class="contact_me">
+        <h4>Contact me:</h4>
+        <form method="post" action="{% url 'contact_me_url' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="inpp">
+                <span>Your subject:</span>
+                {{ form.subject }}
+            </div>
+            <div class="inpp">
+                <span>Your message:</span>
+                {{ form.message }}
+            </div>
+            {% if user.is_authenticated %}
+                <button type="submit">Send</button>
+            {% else %}
+                <button type="submit" disabled>Send</button>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}

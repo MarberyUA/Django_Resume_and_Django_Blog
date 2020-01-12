@@ -9,7 +9,7 @@
     <div class="tags">
         <h1 class="">Tags:</h1>
         {% for tag in tags %}
-            <h3><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></h3>
+            <h3><a href="{% url 'tag_list_url' tag.id %}">{{ tag.title }}</a></h3>
         {% endfor %}
     </div>
 

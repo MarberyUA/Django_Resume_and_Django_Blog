@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
+from secret_info import SECRET_KEY, S_EMAIL_HOST, S_EMAIL_PORT, S_EMAIL_HOST_USER, S_EMAIL_HOST_PASSWORD, S_DB_USER, S_DB_USER_PASSWORD
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'tq%bdq@%=@whx!ewn5(9*w04*qm+ly0k9q9f4!s!7@63^!d5st'
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,10 +81,12 @@ WSGI_APPLICATION = 'Resume_Engine.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'projects',
+
+        #db name
+        'NAME': '',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'Marbery',
-        'PASSWORD': '12345szsz',
+        'USER': S_DB_USER,
+        'PASSWORD': S_DB_USER_PASSWORD,
         'HOST': 'localhost',
     }
 }
@@ -139,19 +141,15 @@ MEDIA_URL = '/media/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.ukr.net'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'rlevadniy@ukr.net'
-EMAIL_HOST_PASSWORD = '*******'
+EMAIL_HOST = S_EMAIL_HOST
+EMAIL_PORT = S_EMAIL_PORT
+EMAIL_HOST_USER = S_EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = S_EMAIL_HOST_PASSWORD
 EMAIL_USE_SSL = True
-EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'rlevadniy@ukr.net'
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 LOGIN_REDIRECT_URL = 'posts_list_url'
 LOGOUT_REDIRECT_URL = 'posts_list_url'
 AUTH_USER_MODEL = "accounts.User"
-
-# for registration sending mails
-
-# DEFAULT_FROM_EMAIL = 'rlevadniy@ukr.net'

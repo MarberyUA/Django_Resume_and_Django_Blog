@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.shortcuts import get_object_or_404
 
 from .models import *
@@ -8,8 +8,8 @@ class ObjectDetailMixin:
     model = None
     template = None
 
-    def get(self, request, slug):
-        obj = get_object_or_404(self.model, slug__iexact=slug)
+    def get(self, request, id):
+        obj = get_object_or_404(self.model, id=id)
         return render(request, self.template, context={self.model.__name__.lower(): obj, 'admin_object': obj,
                                                        'detail': True})
 
@@ -36,13 +36,13 @@ class ObjectUpdateMixin:
     form_model = None
     template = None
 
-    def get(self, request, slug):
-        obj = self.model.objects.get(slug__iexact=slug)
+    def get(self, request, id):
+        obj = self.model.objects.get(id=id)
         bound_form = self.form_model(instance=obj)
         return render(request, self.template, context={'form': bound_form, self.model.__name__.lower(): obj})
 
-    def post(self, request, slug):
-        obj = self.model.objects.get(slug__iexact=slug)
+    def post(self, request, id):
+        obj = self.model.objects.get(id=id)
         bound_form = self.form_model(request.POST, instance=obj)
 
         if bound_form.is_valid():
@@ -56,11 +56,11 @@ class ObjectDeleteMixin:
     template = None
     redirect_link = None
 
-    def get(self, request, slug):
-        obj = self.model.objects.get(slug__iexact=slug)
+    def get(self, request, id):
+        obj = self.model.objects.get(id=id)
         return render(request, self.template, context={self.model.__name__.lower(): obj})
 
-    def post(self, request, slug):
-        obj = self.model.objects.get(slug__iexact=slug)
+    def post(self, request, id):
+        obj = self.model.objects.get(id=id)
         obj.delete()
         return redirect(reverse(self.redirect_link))

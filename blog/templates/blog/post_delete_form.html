@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ post.get_delete_url }}" method="post">
+    <form action="{% url 'post_delete_url' post.id %}" method="post">
         {% csrf_token %}
 
         <h3>Are you sure you want to delete <b>"{{ post.title|title }}"</b>post?</h3>
-        <a href="{{ post.get_absolute_url }}">Cancel</a>
+        <a href="{% url 'post_detail_url' post.id %}">Cancel</a>
         <button type="submit" name="button" class="">Delete</button>
 
     </form>
